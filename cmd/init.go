@@ -13,6 +13,7 @@ var ctx = context.Background()
 // Init starts the application by creating Redis connections
 // and configurations.
 func Init() {
+	env.LoadEnv()
 	env.CheckEnv()
 	redisClient := redis.InitRedis(ctx)
 

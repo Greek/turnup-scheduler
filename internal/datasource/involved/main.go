@@ -9,15 +9,18 @@ import (
 )
 
 type InvolvedEvent struct {
-	Id             string          `json:"id"`
-	Name           string          `json:"name"`
-	Description    string          `json:"description"`
-	OrganizationId int             `json:"organizationId"`
-	ImagePath      string          `json:"imagePath"`
-	ImageUrl       string          `json:"imageUrl"`
-	Address        InvolvedAddress `json:"address"`
-	StartsOn       string          `json:"startsOn"`
-	EndsOn         string          `json:"endsOn"`
+	Id             string `json:"id"`
+	Name           string `json:"name"`
+	Description    string `json:"description"`
+	OrganizationId int    `json:"organizationId"`
+	ImagePath      string `json:"imagePath"`
+	ImageUrl       string `json:"imageUrl"`
+	// Address        InvolvedAddress `json:"address"`
+	Location  string `json:"location"`
+	StartsOn  string `json:"startsOn"`
+	Latitude  string `json:"latitude"`
+	Longitude string `json:"longitude"`
+	EndsOn    string `json:"endsOn"`
 }
 
 type InvolvedAddress struct {
