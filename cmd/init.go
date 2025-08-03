@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"context"
-	"time"
 	"turnup-scheduler/internal/env"
 	"turnup-scheduler/internal/redis"
 	"turnup-scheduler/pkg/scheduler"
@@ -15,12 +14,11 @@ var ctx = context.Background()
 func Init() {
 	env.LoadEnv()
 	env.CheckEnv()
-	redisClient := redis.InitRedis(ctx)
 
+	redisClient := redis.InitRedis(ctx)
 	sch := scheduler.CreateScheduler(ctx, redisClient)
 
 	redis.CreatePubsubListener(ctx, redisClient, sch)
 	sch.CheckForInitialSnapshot()
-	sch.Redis.SetEx(sch.Ctx, "hello", "world", 1*time.Second)
 	select {}
 }
