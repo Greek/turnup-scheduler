@@ -1,0 +1,49 @@
+package involved
+
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+	"turnup-scheduler/internal/constants"
+	"turnup-scheduler/internal/lib"
+)
+
+type InvolvedEvent struct {
+	Id             string          `json:"id"`
+	Name           string          `json:"name"`
+	Description    string          `json:"description"`
+	OrganizationId int             `json:"organizationId"`
+	ImagePath      string          `json:"imagePath"`
+	ImageUrl       string          `json:"imageUrl"`
+	Address        InvolvedAddress `json:"address"`
+	StartsOn       string          `json:"startsOn"`
+	EndsOn         string          `json:"endsOn"`
+}
+
+type InvolvedAddress struct {
+	Name      string `json:"name"`
+	Location  string `json:"location"`
+	Latitude  string `json:"latitude"`
+	Longitude string `json:"longitude"`
+}
+
+type InvolvedResponseWithEvents struct {
+	Value []InvolvedEvent `json:"value"`
+}
+
+type GetAllEventsOpts struct{ Take int }
+
+func GetAllEvents(opts GetAllEventsOpts) (InvolvedResponseWithEvents, error) {
+	var data InvolvedResponseWithEvents
+	rawData, err := lib.GetHTTPData(constants.INVOLVED_URL + "/discovery/event/search?take=" + fmt.Sprint(opts.Take))
+	if err != nil {
+		log.Fatalf("%s", err)
+		return InvolvedResponseWithEvents{}, err
+	}
+	if err := json.Unmarshal(rawData, &data); err != nil {
+		log.Fatalf("%s", err)
+		return InvolvedResponseWithEvents{}, err
+	}
+
+	return data, nil
+}
