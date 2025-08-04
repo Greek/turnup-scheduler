@@ -7,6 +7,7 @@ import (
 	"log"
 	"turnup-scheduler/internal/constants"
 	"turnup-scheduler/internal/datasource/events"
+	"turnup-scheduler/internal/datasource/eventsattu"
 	"turnup-scheduler/internal/datasource/involved"
 	"turnup-scheduler/internal/mappers"
 
@@ -46,22 +47,36 @@ func (s Scheduler) CreateSnapshot(date string, namespace string, opts CreateSnap
 		return "", errors.New("[CreateSnapshot] key already exists")
 	}
 
+	allEvents := []events.StandardEvent{}
+
 	log.Printf("[CreateSnapshot] Getting events...")
-	events, err := involved.GetAllEvents(involved.GetAllEventsOpts{Take: 50})
+	log.Print("[CreateSnapshot] getting involved events")
+	involvedEvents, err := involved.GetAllEvents(involved.GetAllEventsOpts{Take: 50})
 	if err != nil {
 		log.Printf("[CreateSnapshot] Failed to get events %+v", err)
 		return "", err
 	}
+	mappedInvolvedEvents := mappers.MapInvolvedEventsToStdEvent(involvedEvents.Value)
 
-	mappedEvents := mappers.MapInvolvedEventsToStdEvent(events.Value)
-	mappedEventsBytes, err := json.Marshal(mappedEvents)
+	log.Print("[CreateSnapshot] getting events@tu events")
+	eventsAtTUEvents, err := eventsattu.GetAllEvents(eventsattu.GetAllEventsOpts{Take: 50})
 	if err != nil {
-		log.Printf("[CreateSnapshot] Failed to marshal events %+v", err)
+		log.Printf("[CreateSnapshot] Failed to get events %+v", err)
+		return "", err
+	}
+	mappedEventsAtTUEvents := mappers.MapEventAtTUEventsToStdEvent(eventsAtTUEvents)
+
+	allEvents = append(allEvents, mappedInvolvedEvents...)
+	allEvents = append(allEvents, mappedEventsAtTUEvents...)
+
+	marshaledEvents, err := json.Marshal(allEvents)
+	if err != nil {
+		log.Fatalf("[CreateSnapshot] Failed to marshal events: %v", err)
 		return "", err
 	}
 
 	s.Redis.Del(s.Ctx, key)
-	val, err = s.Redis.SetEx(s.Ctx, key, mappedEventsBytes, constants.FIFTEEN_MINUTES).Result()
+	val, err = s.Redis.SetEx(s.Ctx, key, marshaledEvents, constants.FIFTEEN_MINUTES).Result()
 	if err != nil {
 		log.Fatalf("[CreateSnapshot] Failed to create snapshot %v", err)
 		return "", err

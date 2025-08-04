@@ -3,6 +3,7 @@ package mappers
 import (
 	"fmt"
 	eventsTypes "turnup-scheduler/internal/datasource/events"
+	"turnup-scheduler/internal/datasource/eventsattu"
 	"turnup-scheduler/internal/datasource/involved"
 )
 
@@ -29,6 +30,27 @@ func MapInvolvedEventsToStdEvent(events []involved.InvolvedEvent) []eventsTypes.
 			StartDate:   event.StartsOn,
 			EndDate:     event.EndsOn,
 			EventSource: eventsTypes.EventTypeInvolved,
+		})
+	}
+	return standardEvents
+}
+
+func MapEventAtTUEventsToStdEvent(events eventsattu.EventsAtTUResponseWithEvents) []eventsTypes.StandardEvent {
+	standardEvents := []eventsTypes.StandardEvent{}
+
+	for _, entry := range events.Events {
+		standardEvents = append(standardEvents, eventsTypes.StandardEvent{
+			Id:          entry.Event.Id,
+			Name:        entry.Event.Title,
+			Description: entry.Event.Description,
+			OriginalUrl: "https://events.towson.edu/event/" + fmt.Sprint(entry.Event.UrlName),
+			Location:    entry.Event.LocationName,
+			CoverImage:  entry.Event.PhotoUrl,
+			Lat:         entry.Event.Geo.Latitude,
+			Long:        entry.Event.Geo.Longitude,
+			StartDate:   entry.Event.EventInstances[0].EventInstance.Start,
+			EndDate:     entry.Event.EventInstances[0].EventInstance.End,
+			EventSource: eventsTypes.EventTypeEventsAtTU,
 		})
 	}
 	return standardEvents
