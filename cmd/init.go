@@ -18,7 +18,7 @@ func Init() {
 	redisClient := redis.InitRedis(ctx)
 	sch := scheduler.CreateScheduler(ctx, redisClient)
 
-	redis.CreatePubsubListener(ctx, redisClient, sch)
 	sch.CheckForInitialSnapshot()
+	redis.CreatePubsubListener(ctx, redisClient, sch)
 	select {}
 }

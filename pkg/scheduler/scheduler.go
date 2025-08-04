@@ -35,6 +35,8 @@ func (s Scheduler) CheckForInitialSnapshot() (bool, string) {
 		if err != nil {
 			return false, err.Error()
 		}
+	} else {
+		log.Printf("[CheckForInitialSnapshot] Snapshot found for %s:%s Skipping.", s.CurrDate, "towson")
 	}
 
 	return true, ""
