@@ -10,33 +10,32 @@ import (
 )
 
 type Scheduler struct {
-	Ctx      context.Context
-	Redis    redis.Client
-	CurrDate string
+	Ctx   context.Context
+	Redis redis.Client
 }
 
 func CreateScheduler(ctx context.Context, redisClient redis.Client) *Scheduler {
-	currTime := strings.ReplaceAll(time.Now().UTC().Format(time.DateOnly), "-", "")
 	return &Scheduler{
-		Ctx:      ctx,
-		Redis:    redisClient,
-		CurrDate: currTime,
+		Ctx:   ctx,
+		Redis: redisClient,
 	}
 }
 
 // CheckForInitialSnapshot
 func (s Scheduler) CheckForInitialSnapshot() (bool, string) {
-	_, err := s.GetSnapshot(s.CurrDate, "towson")
+	currDate := strings.ReplaceAll(time.Now().UTC().Format(time.DateOnly), "-", "")
+
+	_, err := s.GetSnapshot(currDate, "towson")
 	if err == redis.Nil {
-		log.Printf("[CheckForInitialSnapshot] Snapshot not found for snapshot:%s:%s. Creating new snapshot", s.CurrDate, "towson")
-		_, err = s.CreateSnapshot(s.CurrDate, "towson", CreateSnapshotOpts{
+		log.Printf("[CheckForInitialSnapshot] Snapshot not found for snapshot:%s:%s. Creating new snapshot", currDate, "towson")
+		_, err = s.CreateSnapshot(currDate, "towson", CreateSnapshotOpts{
 			Overwrite: true,
 		})
 		if err != nil {
 			return false, err.Error()
 		}
 	} else {
-		log.Printf("[CheckForInitialSnapshot] Snapshot found for %s:%s Skipping.", s.CurrDate, "towson")
+		log.Printf("[CheckForInitialSnapshot] Snapshot found for %s:%s Skipping.", currDate, "towson")
 	}
 
 	return true, ""
