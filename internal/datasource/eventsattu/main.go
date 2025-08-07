@@ -3,7 +3,6 @@ package eventsattu
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"turnup-scheduler/internal/constants"
 	"turnup-scheduler/internal/lib"
 )
@@ -49,12 +48,9 @@ func GetAllEvents(opts GetAllEventsOpts) (EventsAtTUResponseWithEvents, error) {
 	var data EventsAtTUResponseWithEvents
 	rawData, err := lib.GetHTTPData(constants.EVENTS_URL + "events/?days=" + fmt.Sprint(opts.Take))
 	if err != nil {
-		log.Fatalf("%s", err)
 		return EventsAtTUResponseWithEvents{}, err
 	}
 	if err := json.Unmarshal(rawData, &data); err != nil {
-		log.Printf("%s", rawData)
-		log.Fatalf("%s", err)
 		return EventsAtTUResponseWithEvents{}, err
 	}
 

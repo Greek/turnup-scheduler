@@ -3,6 +3,7 @@ package env
 import (
 	"log"
 	"os"
+	"turnup-scheduler/internal/logging"
 
 	"github.com/joho/godotenv"
 )
@@ -17,9 +18,12 @@ func LoadEnv() {
 
 // CheckEnv checks if the proper environment variables are present
 func CheckEnv() {
-	log.Print("checking env variables")
+	log := logging.BuildLogger("CheckEnv")
+
+	log.Info("checking env variables")
 	val := os.Getenv("REDIS_URL")
 	if len(val) == 0 {
-		log.Fatal("REDIS_URL is not defined, exiting")
+		log.Error("REDIS_URL is not defined, exiting")
+		os.Exit(1)
 	}
 }
