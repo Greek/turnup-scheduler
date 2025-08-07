@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
+	"log/slog"
 	"turnup-scheduler/internal/constants"
 	"turnup-scheduler/internal/datasource/events"
 	"turnup-scheduler/internal/datasource/eventsattu"
 	"turnup-scheduler/internal/datasource/involved"
+	"turnup-scheduler/internal/logging"
 	"turnup-scheduler/internal/mappers"
 
 	"github.com/redis/go-redis/v9"
@@ -36,32 +37,33 @@ func (s Scheduler) GetSnapshot(date string, namespace string) ([]events.Standard
 }
 
 func (s Scheduler) CreateSnapshot(date string, namespace string, opts CreateSnapshotOpts) (string, error) {
-	log.Printf("[CreateSnapshot] Creating...")
+	log := logging.BuildLogger("CreateSnapshot")
+	log.Info("Creating...")
 	key := constants.KEY_LATEST_SNAPSHOT + date + ":" + namespace
 
 	val, err := s.Redis.Get(s.Ctx, key).Result()
 	if err == redis.Nil {
-		log.Printf("[CreateSnapshot]\tKey not found, continuing.")
+		log.Info("Key not found, continuing.")
 	}
 	if val != "" && !opts.Overwrite {
-		return "", errors.New("[CreateSnapshot] key already exists")
+		return "", errors.New("key already exists")
 	}
 
 	allEvents := []events.StandardEvent{}
 
-	log.Printf("[CreateSnapshot] Getting events...")
-	log.Print("[CreateSnapshot] getting involved events")
+	log.Info("Getting events...")
+	log.Info("getting involved events")
 	involvedEvents, err := involved.GetAllEvents(involved.GetAllEventsOpts{Take: 50})
 	if err != nil {
-		log.Printf("[CreateSnapshot] Failed to get events %+v", err)
+		log.Info("Failed to get events", slog.Any("err", err))
 		return "", err
 	}
 	mappedInvolvedEvents := mappers.MapInvolvedEventsToStdEvent(involvedEvents.Value)
 
-	log.Print("[CreateSnapshot] getting events@tu events")
+	log.Info("getting events@tu events")
 	eventsAtTUEvents, err := eventsattu.GetAllEvents(eventsattu.GetAllEventsOpts{Take: 50})
 	if err != nil {
-		log.Printf("[CreateSnapshot] Failed to get events %+v", err)
+		log.Info("Failed to get events", slog.Any("err", err))
 		return "", err
 	}
 	mappedEventsAtTUEvents := mappers.MapEventAtTUEventsToStdEvent(eventsAtTUEvents)
@@ -71,17 +73,17 @@ func (s Scheduler) CreateSnapshot(date string, namespace string, opts CreateSnap
 
 	marshaledEvents, err := json.Marshal(allEvents)
 	if err != nil {
-		log.Fatalf("[CreateSnapshot] Failed to marshal events: %v", err)
+		log.Error("Failed to marshal events", slog.Any("err", err))
 		return "", err
 	}
 
 	s.Redis.Del(s.Ctx, key)
 	val, err = s.Redis.SetEx(s.Ctx, key, marshaledEvents, constants.FIFTEEN_MINUTES).Result()
 	if err != nil {
-		log.Fatalf("[CreateSnapshot] Failed to create snapshot %v", err)
+		log.Error("Failed to create snapshot", slog.Any("err", err))
 		return "", err
 	}
-	log.Printf("[CreateSnapshot] Created new snapshot %s", key)
+	log.Info("Created new snapshot", slog.String("key", key))
 
 	return val, err
 }

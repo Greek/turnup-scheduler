@@ -3,7 +3,6 @@ package involved
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"turnup-scheduler/internal/constants"
 	"turnup-scheduler/internal/lib"
 )
@@ -40,11 +39,9 @@ func GetAllEvents(opts GetAllEventsOpts) (InvolvedResponseWithEvents, error) {
 	var data InvolvedResponseWithEvents
 	rawData, err := lib.GetHTTPData(constants.INVOLVED_URL + "/discovery/event/search?take=" + fmt.Sprint(opts.Take))
 	if err != nil {
-		log.Fatalf("%s", err)
 		return InvolvedResponseWithEvents{}, err
 	}
 	if err := json.Unmarshal(rawData, &data); err != nil {
-		log.Fatalf("%s", err)
 		return InvolvedResponseWithEvents{}, err
 	}
 
