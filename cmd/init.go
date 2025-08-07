@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"context"
-	"turnup-scheduler/internal/env"
-	"turnup-scheduler/internal/redis"
+	"turnup-scheduler/pkg/env"
+	"turnup-scheduler/pkg/redis"
 	"turnup-scheduler/pkg/scheduler"
 )
 

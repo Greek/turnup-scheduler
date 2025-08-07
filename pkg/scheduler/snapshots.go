@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"log/slog"
 	"turnup-scheduler/internal/constants"
-	"turnup-scheduler/internal/datasource/events"
-	"turnup-scheduler/internal/datasource/eventsattu"
-	"turnup-scheduler/internal/datasource/involved"
 	"turnup-scheduler/internal/logging"
-	"turnup-scheduler/internal/mappers"
+	"turnup-scheduler/pkg/datasource/events"
+	"turnup-scheduler/pkg/datasource/eventsattu"
+	"turnup-scheduler/pkg/datasource/involved"
+	"turnup-scheduler/pkg/mappers"
 
 	"github.com/redis/go-redis/v9"
 )
