@@ -1,7 +1,6 @@
 package env
 
 import (
-	"log"
 	"os"
 	"turnup-scheduler/internal/logging"
 
@@ -10,9 +9,11 @@ import (
 
 // LoadEnv loads environment variables from a .env file
 func LoadEnv() {
+	log := logging.BuildLogger("LoadEnv")
+
 	err := godotenv.Load()
 	if err != nil {
-		log.Print("env file does not exist")
+		log.Warn("env file does not exist")
 	}
 }
 
