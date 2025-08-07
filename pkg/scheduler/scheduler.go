@@ -23,7 +23,7 @@ func CreateScheduler(ctx context.Context, redisClient redis.Client) *Scheduler {
 }
 
 // CheckForInitialSnapshot
-func (s Scheduler) CheckForInitialSnapshot() (bool, string) {
+func (s Scheduler) CheckForInitialSnapshot() (bool, error) {
 	logger := logging.BuildLogger("CheckForInitialSnapshot")
 	currDate := strings.ReplaceAll(time.Now().UTC().Format(time.DateOnly), "-", "")
 	namespace := "towson"
@@ -35,11 +35,9 @@ func (s Scheduler) CheckForInitialSnapshot() (bool, string) {
 			Overwrite: true,
 		})
 		if err != nil {
-			return false, err.Error()
+			return false, err
 		}
-	} else {
-		logger.Info("Snapshot found", slog.String("currDate", currDate), slog.String("namespace", namespace))
 	}
 
-	return true, ""
+	return true, nil
 }
