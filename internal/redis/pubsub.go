@@ -26,7 +26,8 @@ func CreatePubsubListener(ctx context.Context, r redis.Client, sch *scheduler.Sc
 			currDate := strings.ReplaceAll(time.Now().UTC().Format(time.DateOnly), "-", "")
 
 			if payloadSplit[0] == "snapshot" || payloadSplit[0] == "timer" {
-				log.Info("Snapshot %s:%s expired, creating new set of events.", slog.String("date", payloadSplit[1]), slog.String("namespace", payloadSplit[2]))
+				key := payloadSplit[0] + payloadSplit[1] + ":" + payloadSplit[2]
+				log.Info("Snapshot "+key+" expired, creating new set of events.", slog.String("key", key))
 				sch.CreateSnapshot(currDate, payloadSplit[2], scheduler.CreateSnapshotOpts{Overwrite: true})
 			}
 		}

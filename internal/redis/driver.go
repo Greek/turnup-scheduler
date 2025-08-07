@@ -17,14 +17,14 @@ func InitRedis(ctx context.Context) redis.Client {
 
 	opt, err := redis.ParseURL(os.Getenv("REDIS_URL"))
 	if err != nil {
-		log.Error("Failed to parse Redis URL: %v", slog.Any("err", err))
+		log.Error("Failed to parse Redis URL", slog.Any("err", err))
 	}
 
 	rdb := redis.NewClient(opt)
 
 	err = rdb.Ping(ctx).Err()
 	if err != nil {
-		log.Error("Failed to connect to Redis: %v", slog.Any("err", err))
+		log.Error("Failed to connect to Redis", slog.Any("err", err))
 	}
 	log.Info("Connected.")
 
