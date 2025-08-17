@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"turnup-scheduler/internal/constants"
-	"turnup-scheduler/internal/lib"
+	"turnup-scheduler/internal/lib/http"
 )
 
 type EventsAtTUEvent struct {
@@ -46,7 +46,7 @@ type GetAllEventsOpts struct{ Take int }
 
 func GetAllEvents(opts GetAllEventsOpts) (EventsAtTUResponseWithEvents, error) {
 	var data EventsAtTUResponseWithEvents
-	rawData, err := lib.GetHTTPData(constants.EVENTS_URL + "events/?days=" + fmt.Sprint(opts.Take))
+	rawData, err := http.GetHTTPData(constants.EVENTS_URL + "events/?days=" + fmt.Sprint(opts.Take))
 	if err != nil {
 		return EventsAtTUResponseWithEvents{}, err
 	}

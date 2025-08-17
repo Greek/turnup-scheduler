@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"turnup-scheduler/internal/constants"
-	"turnup-scheduler/internal/lib"
+	"turnup-scheduler/internal/lib/http"
 )
 
 type InvolvedEvent struct {
@@ -26,7 +26,7 @@ type InvolvedAddress struct {
 	Name      string `json:"name"`
 	Location  string `json:"location"`
 	Latitude  string `json:"latitude"`
-	Longitude string `json:"longitude"`
+
 }
 
 type InvolvedResponseWithEvents struct {
@@ -37,7 +37,7 @@ type GetAllEventsOpts struct{ Take int }
 
 func GetAllEvents(opts GetAllEventsOpts) (InvolvedResponseWithEvents, error) {
 	var data InvolvedResponseWithEvents
-	rawData, err := lib.GetHTTPData(constants.INVOLVED_URL + "/discovery/event/search?take=" + fmt.Sprint(opts.Take))
+	rawData, err := http.GetHTTPData(constants.INVOLVED_URL + "/discovery/event/search?take=" + fmt.Sprint(opts.Take))
 	if err != nil {
 		return InvolvedResponseWithEvents{}, err
 	}
