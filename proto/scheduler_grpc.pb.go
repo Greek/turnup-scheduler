@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SchedulerService_TriggerNewSnapshot_FullMethodName = "/SchedulerService/TriggerNewSnapshot"
+	SchedulerService_GetSnapshot_FullMethodName = "/SchedulerService/GetSnapshot"
 )
 
 // SchedulerServiceClient is the client API for SchedulerService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SchedulerServiceClient interface {
-	TriggerNewSnapshot(ctx context.Context, in *TriggerNewSnapshotRequest, opts ...grpc.CallOption) (*TriggerNewSnapshotResponse, error)
+	GetSnapshot(ctx context.Context, in *GetSnapshotRequest, opts ...grpc.CallOption) (*GetSnapshotResponse, error)
 }
 
 type schedulerServiceClient struct {
@@ -37,10 +37,10 @@ func NewSchedulerServiceClient(cc grpc.ClientConnInterface) SchedulerServiceClie
 	return &schedulerServiceClient{cc}
 }
 
-func (c *schedulerServiceClient) TriggerNewSnapshot(ctx context.Context, in *TriggerNewSnapshotRequest, opts ...grpc.CallOption) (*TriggerNewSnapshotResponse, error) {
+func (c *schedulerServiceClient) GetSnapshot(ctx context.Context, in *GetSnapshotRequest, opts ...grpc.CallOption) (*GetSnapshotResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(TriggerNewSnapshotResponse)
-	err := c.cc.Invoke(ctx, SchedulerService_TriggerNewSnapshot_FullMethodName, in, out, cOpts...)
+	out := new(GetSnapshotResponse)
+	err := c.cc.Invoke(ctx, SchedulerService_GetSnapshot_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func (c *schedulerServiceClient) TriggerNewSnapshot(ctx context.Context, in *Tri
 // All implementations must embed UnimplementedSchedulerServiceServer
 // for forward compatibility.
 type SchedulerServiceServer interface {
-	TriggerNewSnapshot(context.Context, *TriggerNewSnapshotRequest) (*TriggerNewSnapshotResponse, error)
+	GetSnapshot(context.Context, *GetSnapshotRequest) (*GetSnapshotResponse, error)
 	mustEmbedUnimplementedSchedulerServiceServer()
 }
 
@@ -62,8 +62,8 @@ type SchedulerServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedSchedulerServiceServer struct{}
 
-func (UnimplementedSchedulerServiceServer) TriggerNewSnapshot(context.Context, *TriggerNewSnapshotRequest) (*TriggerNewSnapshotResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TriggerNewSnapshot not implemented")
+func (UnimplementedSchedulerServiceServer) GetSnapshot(context.Context, *GetSnapshotRequest) (*GetSnapshotResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSnapshot not implemented")
 }
 func (UnimplementedSchedulerServiceServer) mustEmbedUnimplementedSchedulerServiceServer() {}
 func (UnimplementedSchedulerServiceServer) testEmbeddedByValue()                          {}
@@ -86,20 +86,20 @@ func RegisterSchedulerServiceServer(s grpc.ServiceRegistrar, srv SchedulerServic
 	s.RegisterService(&SchedulerService_ServiceDesc, srv)
 }
 
-func _SchedulerService_TriggerNewSnapshot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TriggerNewSnapshotRequest)
+func _SchedulerService_GetSnapshot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSnapshotRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SchedulerServiceServer).TriggerNewSnapshot(ctx, in)
+		return srv.(SchedulerServiceServer).GetSnapshot(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SchedulerService_TriggerNewSnapshot_FullMethodName,
+		FullMethod: SchedulerService_GetSnapshot_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServiceServer).TriggerNewSnapshot(ctx, req.(*TriggerNewSnapshotRequest))
+		return srv.(SchedulerServiceServer).GetSnapshot(ctx, req.(*GetSnapshotRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -112,8 +112,8 @@ var SchedulerService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SchedulerServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "TriggerNewSnapshot",
-			Handler:    _SchedulerService_TriggerNewSnapshot_Handler,
+			MethodName: "GetSnapshot",
+			Handler:    _SchedulerService_GetSnapshot_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

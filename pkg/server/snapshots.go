@@ -13,8 +13,8 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s *Server) TriggerNewSnapshot(_ context.Context, in *pb.TriggerNewSnapshotRequest) (*pb.TriggerNewSnapshotResponse, error) {
-	log := logging.BuildLogger("TriggerNewSnapshot")
+func (s *Server) GetSnapshot(_ context.Context, in *pb.GetSnapshotRequest) (*pb.GetSnapshotResponse, error) {
+	log := logging.BuildLogger("GetSnapshot")
 	currDate := lib.BuildDate()
 	namespace := in.GetNamespace()
 
@@ -39,13 +39,13 @@ func (s *Server) TriggerNewSnapshot(_ context.Context, in *pb.TriggerNewSnapshot
 				return nil, marshalErr
 			}
 
-			return &pb.TriggerNewSnapshotResponse{
+			return &pb.GetSnapshotResponse{
 				Snapshot: string(bytes),
 			}, nil
 		}
 
 	}
-	return &pb.TriggerNewSnapshotResponse{
+	return &pb.GetSnapshotResponse{
 		Snapshot: createdSnapshot,
 	}, nil
 }

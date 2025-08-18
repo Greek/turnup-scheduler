@@ -9,7 +9,6 @@ package schedulermama
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	_ "google.golang.org/protobuf/types/known/structpb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -22,7 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type TriggerNewSnapshotRequest struct {
+type GetSnapshotRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
 	Overwrite     bool                   `protobuf:"varint,2,opt,name=overwrite,proto3" json:"overwrite,omitempty"`
@@ -30,20 +29,20 @@ type TriggerNewSnapshotRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TriggerNewSnapshotRequest) Reset() {
-	*x = TriggerNewSnapshotRequest{}
+func (x *GetSnapshotRequest) Reset() {
+	*x = GetSnapshotRequest{}
 	mi := &file_proto_scheduler_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TriggerNewSnapshotRequest) String() string {
+func (x *GetSnapshotRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TriggerNewSnapshotRequest) ProtoMessage() {}
+func (*GetSnapshotRequest) ProtoMessage() {}
 
-func (x *TriggerNewSnapshotRequest) ProtoReflect() protoreflect.Message {
+func (x *GetSnapshotRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_scheduler_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -55,46 +54,46 @@ func (x *TriggerNewSnapshotRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TriggerNewSnapshotRequest.ProtoReflect.Descriptor instead.
-func (*TriggerNewSnapshotRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetSnapshotRequest.ProtoReflect.Descriptor instead.
+func (*GetSnapshotRequest) Descriptor() ([]byte, []int) {
 	return file_proto_scheduler_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *TriggerNewSnapshotRequest) GetNamespace() string {
+func (x *GetSnapshotRequest) GetNamespace() string {
 	if x != nil {
 		return x.Namespace
 	}
 	return ""
 }
 
-func (x *TriggerNewSnapshotRequest) GetOverwrite() bool {
+func (x *GetSnapshotRequest) GetOverwrite() bool {
 	if x != nil {
 		return x.Overwrite
 	}
 	return false
 }
 
-type TriggerNewSnapshotResponse struct {
+type GetSnapshotResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Snapshot      string                 `protobuf:"bytes,1,opt,name=snapshot,proto3" json:"snapshot,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TriggerNewSnapshotResponse) Reset() {
-	*x = TriggerNewSnapshotResponse{}
+func (x *GetSnapshotResponse) Reset() {
+	*x = GetSnapshotResponse{}
 	mi := &file_proto_scheduler_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TriggerNewSnapshotResponse) String() string {
+func (x *GetSnapshotResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TriggerNewSnapshotResponse) ProtoMessage() {}
+func (*GetSnapshotResponse) ProtoMessage() {}
 
-func (x *TriggerNewSnapshotResponse) ProtoReflect() protoreflect.Message {
+func (x *GetSnapshotResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_scheduler_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -106,12 +105,12 @@ func (x *TriggerNewSnapshotResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TriggerNewSnapshotResponse.ProtoReflect.Descriptor instead.
-func (*TriggerNewSnapshotResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetSnapshotResponse.ProtoReflect.Descriptor instead.
+func (*GetSnapshotResponse) Descriptor() ([]byte, []int) {
 	return file_proto_scheduler_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *TriggerNewSnapshotResponse) GetSnapshot() string {
+func (x *GetSnapshotResponse) GetSnapshot() string {
 	if x != nil {
 		return x.Snapshot
 	}
@@ -122,14 +121,14 @@ var File_proto_scheduler_proto protoreflect.FileDescriptor
 
 const file_proto_scheduler_proto_rawDesc = "" +
 	"\n" +
-	"\x15proto/scheduler.proto\x1a\x1cgoogle/protobuf/struct.proto\"W\n" +
-	"\x19TriggerNewSnapshotRequest\x12\x1c\n" +
+	"\x15proto/scheduler.proto\"P\n" +
+	"\x12GetSnapshotRequest\x12\x1c\n" +
 	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x1c\n" +
-	"\toverwrite\x18\x02 \x01(\bR\toverwrite\"8\n" +
-	"\x1aTriggerNewSnapshotResponse\x12\x1a\n" +
-	"\bsnapshot\x18\x01 \x01(\tR\bsnapshot2a\n" +
-	"\x10SchedulerService\x12M\n" +
-	"\x12TriggerNewSnapshot\x12\x1a.TriggerNewSnapshotRequest\x1a\x1b.TriggerNewSnapshotResponseB\x11Z\x0f./schedulermamab\x06proto3"
+	"\toverwrite\x18\x02 \x01(\bR\toverwrite\"1\n" +
+	"\x13GetSnapshotResponse\x12\x1a\n" +
+	"\bsnapshot\x18\x01 \x01(\tR\bsnapshot2L\n" +
+	"\x10SchedulerService\x128\n" +
+	"\vGetSnapshot\x12\x13.GetSnapshotRequest\x1a\x14.GetSnapshotResponseB\x11Z\x0f./schedulermamab\x06proto3"
 
 var (
 	file_proto_scheduler_proto_rawDescOnce sync.Once
@@ -145,12 +144,12 @@ func file_proto_scheduler_proto_rawDescGZIP() []byte {
 
 var file_proto_scheduler_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_proto_scheduler_proto_goTypes = []any{
-	(*TriggerNewSnapshotRequest)(nil),  // 0: TriggerNewSnapshotRequest
-	(*TriggerNewSnapshotResponse)(nil), // 1: TriggerNewSnapshotResponse
+	(*GetSnapshotRequest)(nil),  // 0: GetSnapshotRequest
+	(*GetSnapshotResponse)(nil), // 1: GetSnapshotResponse
 }
 var file_proto_scheduler_proto_depIdxs = []int32{
-	0, // 0: SchedulerService.TriggerNewSnapshot:input_type -> TriggerNewSnapshotRequest
-	1, // 1: SchedulerService.TriggerNewSnapshot:output_type -> TriggerNewSnapshotResponse
+	0, // 0: SchedulerService.GetSnapshot:input_type -> GetSnapshotRequest
+	1, // 1: SchedulerService.GetSnapshot:output_type -> GetSnapshotResponse
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
