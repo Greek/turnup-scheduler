@@ -2,6 +2,7 @@ package redis
 
 import (
 	"context"
+	realLog "log"
 	"log/slog"
 	"os"
 
@@ -24,7 +25,7 @@ func InitRedis(ctx context.Context) redis.Client {
 
 	err = rdb.Ping(ctx).Err()
 	if err != nil {
-		log.Error("Failed to connect to Redis", slog.Any("err", err))
+		realLog.Fatalf("Failed to connect to Redis %+v", err)
 	}
 	log.Info("Connected.")
 

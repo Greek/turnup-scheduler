@@ -78,12 +78,12 @@ func (s Scheduler) CreateSnapshot(date string, namespace string, opts CreateSnap
 	}
 
 	s.Redis.Del(s.Ctx, key)
-	val, err = s.Redis.SetEx(s.Ctx, key, marshaledEvents, constants.FIFTEEN_MINUTES).Result()
+	err = s.Redis.SetEx(s.Ctx, key, marshaledEvents, constants.FIFTEEN_MINUTES).Err()
 	if err != nil {
 		log.Error("Failed to create snapshot", slog.Any("err", err))
 		return "", err
 	}
 	log.Info("Created new snapshot", slog.String("key", key))
 
-	return val, err
+	return string(marshaledEvents), err
 }

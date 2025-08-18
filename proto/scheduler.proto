@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = "./schedulermama";
+
+message TriggerNewSnapshotRequest {
+  string namespace = 1;
+  bool overwrite = 2;
+}
+
+message TriggerNewSnapshotResponse {
+  string snapshot = 1;
+}
+
+service SchedulerService {
+  rpc TriggerNewSnapshot (TriggerNewSnapshotRequest) returns (TriggerNewSnapshotResponse);
+}

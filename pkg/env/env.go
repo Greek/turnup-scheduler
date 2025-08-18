@@ -27,4 +27,10 @@ func CheckEnv() {
 		log.Error("REDIS_URL is not defined, exiting")
 		os.Exit(1)
 	}
+
+	token := os.Getenv("AUTH_TOKEN")
+	if len(token) == 0 {
+		log.Error("AUTH_TOKEN is not defined, exiting")
+		os.Exit(1)
+	}
 }
