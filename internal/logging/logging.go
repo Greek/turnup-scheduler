@@ -10,7 +10,7 @@ func BuildLogger(method string) *slog.Logger {
 	if os.Getenv("ENV") != "prod" {
 		level = slog.LevelDebug
 	} else {
-		level = slog.LevelError
+		level = slog.LevelInfo
 	}
 
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: level})).With("method", method)
