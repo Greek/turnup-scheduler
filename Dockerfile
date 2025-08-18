@@ -17,4 +17,4 @@ WORKDIR /app
 
 COPY --from=builder /turnup-scheduler /app/turnup-scheduler
 
-CMD ["/app/turnup-scheduler"]
+CMD ["/app/turnup-scheduler", "--port", "3000"]
