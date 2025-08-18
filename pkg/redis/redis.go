@@ -6,8 +6,8 @@ import (
 	"log/slog"
 	"os"
 
+	"turnup-scheduler/internal/env"
 	"turnup-scheduler/internal/logging"
-	"turnup-scheduler/pkg/env"
 
 	"github.com/redis/go-redis/v9"
 )
