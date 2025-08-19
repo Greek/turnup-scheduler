@@ -2,9 +2,9 @@ package mappers
 
 import (
 	"fmt"
-	eventsTypes "turnup-scheduler/pkg/datasource/events"
-	"turnup-scheduler/pkg/datasource/eventsattu"
-	"turnup-scheduler/pkg/datasource/involved"
+	eventsTypes "turnup-scheduler/pkg/repo/events"
+	"turnup-scheduler/pkg/repo/eventsattu"
+	"turnup-scheduler/pkg/repo/involved"
 )
 
 func MapInvolvedEventsToStdEvent(events []involved.InvolvedEvent) []eventsTypes.StandardEvent {

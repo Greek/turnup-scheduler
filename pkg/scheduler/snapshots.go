@@ -7,10 +7,10 @@ import (
 	"log/slog"
 	"turnup-scheduler/internal/constants"
 	"turnup-scheduler/internal/logging"
-	"turnup-scheduler/pkg/datasource/events"
-	"turnup-scheduler/pkg/datasource/eventsattu"
-	"turnup-scheduler/pkg/datasource/involved"
 	"turnup-scheduler/pkg/mappers"
+	"turnup-scheduler/pkg/repo/events"
+	"turnup-scheduler/pkg/repo/eventsattu"
+	"turnup-scheduler/pkg/repo/involved"
 
 	"github.com/redis/go-redis/v9"
 )
