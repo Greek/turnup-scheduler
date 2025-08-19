@@ -4,7 +4,7 @@
 // - protoc             v5.29.3
 // source: proto/scheduler.proto
 
-package schedulermama
+package scheduler
 
 import (
 	context "context"

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "./schedulermama";
+option go_package = "./scheduler";
 
 message GetSnapshotRequest {
   string namespace = 1;

@@ -4,7 +4,7 @@
 // 	protoc        v5.29.3
 // source: proto/scheduler.proto
 
-package schedulermama
+package scheduler
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -128,7 +128,7 @@ const file_proto_scheduler_proto_rawDesc = "" +
 	"\x13GetSnapshotResponse\x12\x1a\n" +
 	"\bsnapshot\x18\x01 \x01(\tR\bsnapshot2L\n" +
 	"\x10SchedulerService\x128\n" +
-	"\vGetSnapshot\x12\x13.GetSnapshotRequest\x1a\x14.GetSnapshotResponseB\x11Z\x0f./schedulermamab\x06proto3"
+	"\vGetSnapshot\x12\x13.GetSnapshotRequest\x1a\x14.GetSnapshotResponseB\rZ\v./schedulerb\x06proto3"
 
 var (
 	file_proto_scheduler_proto_rawDescOnce sync.Once
