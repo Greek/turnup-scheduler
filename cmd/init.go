@@ -5,8 +5,8 @@ import (
 	"flag"
 	"log/slog"
 	"turnup-scheduler/internal/env"
+	"turnup-scheduler/internal/lib/redis"
 	"turnup-scheduler/internal/logging"
-	"turnup-scheduler/pkg/redis"
 	"turnup-scheduler/pkg/scheduler"
 	"turnup-scheduler/pkg/server"
 )
@@ -34,7 +34,7 @@ func Init() {
 		log.Error("Failed to execute CheckForInitialSnapshot", slog.Any("err", err))
 	}
 
-	redis.CreatePubsubListener(ctx, redisClient, sch)
+	sch.CreatePubsubListener(ctx, redisClient)
 	server.InitializeGrpcServer(*port, sch)
 	select {}
 }

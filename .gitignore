@@ -33,3 +33,6 @@ go.work.sum
 
 # binary
 turnup-scheduler
+
+# other slop
+.DS_Store
