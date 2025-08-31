@@ -16,6 +16,8 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
+const RETRY_INTERVAL = 600 * time.Millisecond
+
 type CreateSnapshotOpts struct {
 	Overwrite bool
 }
@@ -63,7 +65,7 @@ func (s Scheduler) CreateSnapshot(date string, namespace string, opts CreateSnap
 			break
 		}
 		log.Info("Retrying involved.GetAllEvents", slog.Int("attempt", i+1), slog.Any("err", lastErr))
-		time.Sleep(200 * time.Millisecond)
+		time.Sleep(RETRY_INTERVAL)
 	}
 	if lastErr != nil {
 		log.Info("Failed to get events", slog.Any("err", lastErr))
@@ -80,7 +82,7 @@ func (s Scheduler) CreateSnapshot(date string, namespace string, opts CreateSnap
 			break
 		}
 		log.Info("Retrying eventsattu.GetAllEvents", slog.Int("attempt", i+1), slog.Any("err", lastErr))
-		time.Sleep(200 * time.Millisecond)
+		time.Sleep(RETRY_INTERVAL)
 	}
 	if lastErr != nil {
 		log.Info("Failed to get events", slog.Any("err", lastErr))
