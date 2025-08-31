@@ -23,10 +23,9 @@ type InvolvedEvent struct {
 }
 
 type InvolvedAddress struct {
-	Name      string `json:"name"`
-	Location  string `json:"location"`
-	Latitude  string `json:"latitude"`
-
+	Name     string `json:"name"`
+	Location string `json:"location"`
+	Latitude string `json:"latitude"`
 }
 
 type InvolvedResponseWithEvents struct {

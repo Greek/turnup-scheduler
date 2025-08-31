@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"time"
 	"turnup-scheduler/internal/constants"
 	"turnup-scheduler/internal/logging"
 	"turnup-scheduler/pkg/mappers"
@@ -53,20 +54,39 @@ func (s Scheduler) CreateSnapshot(date string, namespace string, opts CreateSnap
 
 	log.Info("Getting events...")
 	log.Info("getting involved events")
-	involvedEvents, err := involved.GetAllEvents(involved.GetAllEventsOpts{Take: 50})
-	if err != nil {
-		log.Info("Failed to get events", slog.Any("err", err))
-		return "", err
+
+	var involvedEventsResult involved.InvolvedResponseWithEvents
+	var lastErr error
+	for i := range 3 {
+		involvedEventsResult, lastErr = involved.GetAllEvents(involved.GetAllEventsOpts{Take: 50})
+		if lastErr == nil {
+			break
+		}
+		log.Info("Retrying involved.GetAllEvents", slog.Int("attempt", i+1), slog.Any("err", lastErr))
+		time.Sleep(200 * time.Millisecond)
 	}
-	mappedInvolvedEvents := mappers.MapInvolvedEventsToStdEvent(involvedEvents.Value)
+	if lastErr != nil {
+		log.Info("Failed to get events", slog.Any("err", lastErr))
+		return "", lastErr
+	}
+	mappedInvolvedEvents := mappers.MapInvolvedEventsToStdEvent(involvedEventsResult.Value)
 
 	log.Info("getting events@tu events")
-	eventsAtTUEvents, err := eventsattu.GetAllEvents(eventsattu.GetAllEventsOpts{Take: 50})
-	if err != nil {
-		log.Info("Failed to get events", slog.Any("err", err))
-		return "", err
+	var eventsAtTUEventsResult eventsattu.EventsAtTUResponseWithEvents
+	lastErr = nil
+	for i := range 3 {
+		eventsAtTUEventsResult, lastErr = eventsattu.GetAllEvents(eventsattu.GetAllEventsOpts{Take: 50})
+		if lastErr == nil {
+			break
+		}
+		log.Info("Retrying eventsattu.GetAllEvents", slog.Int("attempt", i+1), slog.Any("err", lastErr))
+		time.Sleep(200 * time.Millisecond)
 	}
-	mappedEventsAtTUEvents := mappers.MapEventAtTUEventsToStdEvent(eventsAtTUEvents)
+	if lastErr != nil {
+		log.Info("Failed to get events", slog.Any("err", lastErr))
+		return "", lastErr
+	}
+	mappedEventsAtTUEvents := mappers.MapEventAtTUEventsToStdEvent(eventsAtTUEventsResult)
 
 	allEvents = append(allEvents, mappedInvolvedEvents...)
 	allEvents = append(allEvents, mappedEventsAtTUEvents...)
