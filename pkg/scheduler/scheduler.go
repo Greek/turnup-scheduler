@@ -45,7 +45,7 @@ func (s *Scheduler) CreatePubsubListener(ctx context.Context, r redis.Client) {
 }
 
 // CheckForInitialSnapshot
-func (s Scheduler) CheckForInitialSnapshot() (bool, error) {
+func (s *Scheduler) CheckForInitialSnapshot() (bool, error) {
 	logger := logging.BuildLogger("CheckForInitialSnapshot")
 	currDate := strings.ReplaceAll(time.Now().UTC().Format(time.DateOnly), "-", "")
 	namespace := "towson"

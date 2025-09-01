@@ -22,7 +22,7 @@ type CreateSnapshotOpts struct {
 	Overwrite bool
 }
 
-func (s Scheduler) GetSnapshot(date string, namespace string) ([]events.StandardEvent, error) {
+func (s *Scheduler) GetSnapshot(date string, namespace string) ([]events.StandardEvent, error) {
 	key := constants.KEY_LATEST_SNAPSHOT + date + ":" + namespace
 
 	val, err := s.Redis.Get(s.Ctx, key).Result()
@@ -39,7 +39,7 @@ func (s Scheduler) GetSnapshot(date string, namespace string) ([]events.Standard
 	return events, nil
 }
 
-func (s Scheduler) CreateSnapshot(date string, namespace string, opts CreateSnapshotOpts) (string, error) {
+func (s *Scheduler) CreateSnapshot(date string, namespace string, opts CreateSnapshotOpts) (string, error) {
 	log := logging.BuildLogger("CreateSnapshot")
 	log.Info("Creating...")
 	key := constants.KEY_LATEST_SNAPSHOT + date + ":" + namespace
