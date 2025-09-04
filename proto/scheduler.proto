@@ -2,6 +2,11 @@ syntax = "proto3";
 
 option go_package = "./scheduler";
 
+enum EventType {
+  INVOLVED = 0;
+  EVENTS_AT_TU = 1;
+}
+
 message GetSnapshotRequest {
   string namespace = 1;
   bool overwrite = 2;
@@ -11,6 +16,67 @@ message GetSnapshotResponse {
   string snapshot = 1;
 }
 
+message Geolocation {}
+
+message Event {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string original_url = 4;
+  int32 organization_id = 5;
+  string location = 6;
+  string cover_image = 7;
+  string lat = 8;
+  string long = 9;
+  string start_date = 10;
+  string end_date = 11;
+  EventType event_source = 12;
+}
+
+message InvolvedEvent {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  int32 organizationId = 4;
+  string imagePath = 5;
+  string imageUrl = 6;
+  string location = 7;
+  string startsOn = 8;
+  string latitude = 9;
+  string longitude = 10;
+  string endsOn = 11;
+}
+
+message InvolvedEventsResponse {}
+
+message EventsAtTUEvent {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  string urlName = 4;
+  string photoUrl = 5;
+  Geolocation geo = 6;
+  string locationName = 7;
+  repeated EventInstances eventInstances = 8;
+}
+
+message EventInstances {
+  EventInstance eventInstance = 1;
+}
+
+message EventInstance {
+  string start = 1;
+  string end = 2;
+}
+
+message EventsAtTUWrappedEventObj {
+  EventsAtTUEvent event = 1;
+}
+
+message EventsAtTUEventsResponse {
+  EventsAtTUEventsResponse events = 1;
+}
+
 service SchedulerService {
-  rpc GetSnapshot (GetSnapshotRequest) returns (GetSnapshotResponse);
+  rpc GetSnapshot(GetSnapshotRequest) returns (GetSnapshotResponse);
 }

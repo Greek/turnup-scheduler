@@ -21,6 +21,52 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type EventType int32
+
+const (
+	EventType_INVOLVED     EventType = 0
+	EventType_EVENTS_AT_TU EventType = 1
+)
+
+// Enum value maps for EventType.
+var (
+	EventType_name = map[int32]string{
+		0: "INVOLVED",
+		1: "EVENTS_AT_TU",
+	}
+	EventType_value = map[string]int32{
+		"INVOLVED":     0,
+		"EVENTS_AT_TU": 1,
+	}
+)
+
+func (x EventType) Enum() *EventType {
+	p := new(EventType)
+	*p = x
+	return p
+}
+
+func (x EventType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (EventType) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_scheduler_proto_enumTypes[0].Descriptor()
+}
+
+func (EventType) Type() protoreflect.EnumType {
+	return &file_proto_scheduler_proto_enumTypes[0]
+}
+
+func (x EventType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use EventType.Descriptor instead.
+func (EventType) EnumDescriptor() ([]byte, []int) {
+	return file_proto_scheduler_proto_rawDescGZIP(), []int{0}
+}
+
 type GetSnapshotRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
@@ -117,6 +163,514 @@ func (x *GetSnapshotResponse) GetSnapshot() string {
 	return ""
 }
 
+type Geolocation struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Geolocation) Reset() {
+	*x = Geolocation{}
+	mi := &file_proto_scheduler_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Geolocation) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Geolocation) ProtoMessage() {}
+
+func (x *Geolocation) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_scheduler_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Geolocation.ProtoReflect.Descriptor instead.
+func (*Geolocation) Descriptor() ([]byte, []int) {
+	return file_proto_scheduler_proto_rawDescGZIP(), []int{2}
+}
+
+type Event struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name           string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Description    string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	OriginalUrl    string                 `protobuf:"bytes,4,opt,name=original_url,json=originalUrl,proto3" json:"original_url,omitempty"`
+	OrganizationId int32                  `protobuf:"varint,5,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	Location       string                 `protobuf:"bytes,6,opt,name=location,proto3" json:"location,omitempty"`
+	CoverImage     string                 `protobuf:"bytes,7,opt,name=cover_image,json=coverImage,proto3" json:"cover_image,omitempty"`
+	Lat            string                 `protobuf:"bytes,8,opt,name=lat,proto3" json:"lat,omitempty"`
+	Long           string                 `protobuf:"bytes,9,opt,name=long,proto3" json:"long,omitempty"`
+	StartDate      string                 `protobuf:"bytes,10,opt,name=start_date,json=startDate,proto3" json:"start_date,omitempty"`
+	EndDate        string                 `protobuf:"bytes,11,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`
+	EventSource    EventType              `protobuf:"varint,12,opt,name=event_source,json=eventSource,proto3,enum=EventType" json:"event_source,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *Event) Reset() {
+	*x = Event{}
+	mi := &file_proto_scheduler_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Event) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Event) ProtoMessage() {}
+
+func (x *Event) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_scheduler_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Event.ProtoReflect.Descriptor instead.
+func (*Event) Descriptor() ([]byte, []int) {
+	return file_proto_scheduler_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *Event) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Event) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Event) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *Event) GetOriginalUrl() string {
+	if x != nil {
+		return x.OriginalUrl
+	}
+	return ""
+}
+
+func (x *Event) GetOrganizationId() int32 {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return 0
+}
+
+func (x *Event) GetLocation() string {
+	if x != nil {
+		return x.Location
+	}
+	return ""
+}
+
+func (x *Event) GetCoverImage() string {
+	if x != nil {
+		return x.CoverImage
+	}
+	return ""
+}
+
+func (x *Event) GetLat() string {
+	if x != nil {
+		return x.Lat
+	}
+	return ""
+}
+
+func (x *Event) GetLong() string {
+	if x != nil {
+		return x.Long
+	}
+	return ""
+}
+
+func (x *Event) GetStartDate() string {
+	if x != nil {
+		return x.StartDate
+	}
+	return ""
+}
+
+func (x *Event) GetEndDate() string {
+	if x != nil {
+		return x.EndDate
+	}
+	return ""
+}
+
+func (x *Event) GetEventSource() EventType {
+	if x != nil {
+		return x.EventSource
+	}
+	return EventType_INVOLVED
+}
+
+type InvolvedEvent struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name           string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Description    string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	OrganizationId int32                  `protobuf:"varint,4,opt,name=organizationId,proto3" json:"organizationId,omitempty"`
+	ImagePath      string                 `protobuf:"bytes,5,opt,name=imagePath,proto3" json:"imagePath,omitempty"`
+	ImageUrl       string                 `protobuf:"bytes,6,opt,name=imageUrl,proto3" json:"imageUrl,omitempty"`
+	Location       string                 `protobuf:"bytes,7,opt,name=location,proto3" json:"location,omitempty"`
+	StartsOn       string                 `protobuf:"bytes,8,opt,name=startsOn,proto3" json:"startsOn,omitempty"`
+	Latitude       string                 `protobuf:"bytes,9,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Longitude      string                 `protobuf:"bytes,10,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	EndsOn         string                 `protobuf:"bytes,11,opt,name=endsOn,proto3" json:"endsOn,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *InvolvedEvent) Reset() {
+	*x = InvolvedEvent{}
+	mi := &file_proto_scheduler_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InvolvedEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InvolvedEvent) ProtoMessage() {}
+
+func (x *InvolvedEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_scheduler_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InvolvedEvent.ProtoReflect.Descriptor instead.
+func (*InvolvedEvent) Descriptor() ([]byte, []int) {
+	return file_proto_scheduler_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *InvolvedEvent) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *InvolvedEvent) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *InvolvedEvent) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *InvolvedEvent) GetOrganizationId() int32 {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return 0
+}
+
+func (x *InvolvedEvent) GetImagePath() string {
+	if x != nil {
+		return x.ImagePath
+	}
+	return ""
+}
+
+func (x *InvolvedEvent) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *InvolvedEvent) GetLocation() string {
+	if x != nil {
+		return x.Location
+	}
+	return ""
+}
+
+func (x *InvolvedEvent) GetStartsOn() string {
+	if x != nil {
+		return x.StartsOn
+	}
+	return ""
+}
+
+func (x *InvolvedEvent) GetLatitude() string {
+	if x != nil {
+		return x.Latitude
+	}
+	return ""
+}
+
+func (x *InvolvedEvent) GetLongitude() string {
+	if x != nil {
+		return x.Longitude
+	}
+	return ""
+}
+
+func (x *InvolvedEvent) GetEndsOn() string {
+	if x != nil {
+		return x.EndsOn
+	}
+	return ""
+}
+
+type InvolvedEventsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InvolvedEventsResponse) Reset() {
+	*x = InvolvedEventsResponse{}
+	mi := &file_proto_scheduler_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InvolvedEventsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InvolvedEventsResponse) ProtoMessage() {}
+
+func (x *InvolvedEventsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_scheduler_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InvolvedEventsResponse.ProtoReflect.Descriptor instead.
+func (*InvolvedEventsResponse) Descriptor() ([]byte, []int) {
+	return file_proto_scheduler_proto_rawDescGZIP(), []int{5}
+}
+
+type EventsAtTUEvent struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	UrlName       string                 `protobuf:"bytes,4,opt,name=urlName,proto3" json:"urlName,omitempty"`
+	PhotoUrl      string                 `protobuf:"bytes,5,opt,name=photoUrl,proto3" json:"photoUrl,omitempty"`
+	Geo           *Geolocation           `protobuf:"bytes,6,opt,name=geo,proto3" json:"geo,omitempty"`
+	LocationName  string                 `protobuf:"bytes,7,opt,name=locationName,proto3" json:"locationName,omitempty"` // repeated EventInstances eventInstances = 8;
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EventsAtTUEvent) Reset() {
+	*x = EventsAtTUEvent{}
+	mi := &file_proto_scheduler_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EventsAtTUEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EventsAtTUEvent) ProtoMessage() {}
+
+func (x *EventsAtTUEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_scheduler_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EventsAtTUEvent.ProtoReflect.Descriptor instead.
+func (*EventsAtTUEvent) Descriptor() ([]byte, []int) {
+	return file_proto_scheduler_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *EventsAtTUEvent) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *EventsAtTUEvent) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *EventsAtTUEvent) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *EventsAtTUEvent) GetUrlName() string {
+	if x != nil {
+		return x.UrlName
+	}
+	return ""
+}
+
+func (x *EventsAtTUEvent) GetPhotoUrl() string {
+	if x != nil {
+		return x.PhotoUrl
+	}
+	return ""
+}
+
+func (x *EventsAtTUEvent) GetGeo() *Geolocation {
+	if x != nil {
+		return x.Geo
+	}
+	return nil
+}
+
+func (x *EventsAtTUEvent) GetLocationName() string {
+	if x != nil {
+		return x.LocationName
+	}
+	return ""
+}
+
+type EventsAtTUWrappedEventObj struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Event         *EventsAtTUEvent       `protobuf:"bytes,1,opt,name=event,proto3" json:"event,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EventsAtTUWrappedEventObj) Reset() {
+	*x = EventsAtTUWrappedEventObj{}
+	mi := &file_proto_scheduler_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EventsAtTUWrappedEventObj) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EventsAtTUWrappedEventObj) ProtoMessage() {}
+
+func (x *EventsAtTUWrappedEventObj) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_scheduler_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EventsAtTUWrappedEventObj.ProtoReflect.Descriptor instead.
+func (*EventsAtTUWrappedEventObj) Descriptor() ([]byte, []int) {
+	return file_proto_scheduler_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *EventsAtTUWrappedEventObj) GetEvent() *EventsAtTUEvent {
+	if x != nil {
+		return x.Event
+	}
+	return nil
+}
+
+type EventsAtTUEventsResponse struct {
+	state         protoimpl.MessageState    `protogen:"open.v1"`
+	Events        *EventsAtTUEventsResponse `protobuf:"bytes,1,opt,name=events,proto3" json:"events,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EventsAtTUEventsResponse) Reset() {
+	*x = EventsAtTUEventsResponse{}
+	mi := &file_proto_scheduler_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EventsAtTUEventsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EventsAtTUEventsResponse) ProtoMessage() {}
+
+func (x *EventsAtTUEventsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_scheduler_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EventsAtTUEventsResponse.ProtoReflect.Descriptor instead.
+func (*EventsAtTUEventsResponse) Descriptor() ([]byte, []int) {
+	return file_proto_scheduler_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *EventsAtTUEventsResponse) GetEvents() *EventsAtTUEventsResponse {
+	if x != nil {
+		return x.Events
+	}
+	return nil
+}
+
 var File_proto_scheduler_proto protoreflect.FileDescriptor
 
 const file_proto_scheduler_proto_rawDesc = "" +
@@ -126,7 +680,54 @@ const file_proto_scheduler_proto_rawDesc = "" +
 	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x1c\n" +
 	"\toverwrite\x18\x02 \x01(\bR\toverwrite\"1\n" +
 	"\x13GetSnapshotResponse\x12\x1a\n" +
-	"\bsnapshot\x18\x01 \x01(\tR\bsnapshot2L\n" +
+	"\bsnapshot\x18\x01 \x01(\tR\bsnapshot\"\r\n" +
+	"\vGeolocation\"\xe5\x02\n" +
+	"\x05Event\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12!\n" +
+	"\foriginal_url\x18\x04 \x01(\tR\voriginalUrl\x12'\n" +
+	"\x0forganization_id\x18\x05 \x01(\x05R\x0eorganizationId\x12\x1a\n" +
+	"\blocation\x18\x06 \x01(\tR\blocation\x12\x1f\n" +
+	"\vcover_image\x18\a \x01(\tR\n" +
+	"coverImage\x12\x10\n" +
+	"\x03lat\x18\b \x01(\tR\x03lat\x12\x12\n" +
+	"\x04long\x18\t \x01(\tR\x04long\x12\x1d\n" +
+	"\n" +
+	"start_date\x18\n" +
+	" \x01(\tR\tstartDate\x12\x19\n" +
+	"\bend_date\x18\v \x01(\tR\aendDate\x12-\n" +
+	"\fevent_source\x18\f \x01(\x0e2\n" +
+	".EventTypeR\veventSource\"\xc1\x02\n" +
+	"\rInvolvedEvent\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12&\n" +
+	"\x0eorganizationId\x18\x04 \x01(\x05R\x0eorganizationId\x12\x1c\n" +
+	"\timagePath\x18\x05 \x01(\tR\timagePath\x12\x1a\n" +
+	"\bimageUrl\x18\x06 \x01(\tR\bimageUrl\x12\x1a\n" +
+	"\blocation\x18\a \x01(\tR\blocation\x12\x1a\n" +
+	"\bstartsOn\x18\b \x01(\tR\bstartsOn\x12\x1a\n" +
+	"\blatitude\x18\t \x01(\tR\blatitude\x12\x1c\n" +
+	"\tlongitude\x18\n" +
+	" \x01(\tR\tlongitude\x12\x16\n" +
+	"\x06endsOn\x18\v \x01(\tR\x06endsOn\"\x18\n" +
+	"\x16InvolvedEventsResponse\"\xd3\x01\n" +
+	"\x0fEventsAtTUEvent\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
+	"\x05title\x18\x02 \x01(\tR\x05title\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x18\n" +
+	"\aurlName\x18\x04 \x01(\tR\aurlName\x12\x1a\n" +
+	"\bphotoUrl\x18\x05 \x01(\tR\bphotoUrl\x12\x1e\n" +
+	"\x03geo\x18\x06 \x01(\v2\f.GeolocationR\x03geo\x12\"\n" +
+	"\flocationName\x18\a \x01(\tR\flocationName\"C\n" +
+	"\x19EventsAtTUWrappedEventObj\x12&\n" +
+	"\x05event\x18\x01 \x01(\v2\x10.EventsAtTUEventR\x05event\"M\n" +
+	"\x18EventsAtTUEventsResponse\x121\n" +
+	"\x06events\x18\x01 \x01(\v2\x19.EventsAtTUEventsResponseR\x06events*+\n" +
+	"\tEventType\x12\f\n" +
+	"\bINVOLVED\x10\x00\x12\x10\n" +
+	"\fEVENTS_AT_TU\x10\x012L\n" +
 	"\x10SchedulerService\x128\n" +
 	"\vGetSnapshot\x12\x13.GetSnapshotRequest\x1a\x14.GetSnapshotResponseB\rZ\v./schedulerb\x06proto3"
 
@@ -142,19 +743,32 @@ func file_proto_scheduler_proto_rawDescGZIP() []byte {
 	return file_proto_scheduler_proto_rawDescData
 }
 
-var file_proto_scheduler_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_proto_scheduler_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_proto_scheduler_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_proto_scheduler_proto_goTypes = []any{
-	(*GetSnapshotRequest)(nil),  // 0: GetSnapshotRequest
-	(*GetSnapshotResponse)(nil), // 1: GetSnapshotResponse
+	(EventType)(0),                    // 0: EventType
+	(*GetSnapshotRequest)(nil),        // 1: GetSnapshotRequest
+	(*GetSnapshotResponse)(nil),       // 2: GetSnapshotResponse
+	(*Geolocation)(nil),               // 3: Geolocation
+	(*Event)(nil),                     // 4: Event
+	(*InvolvedEvent)(nil),             // 5: InvolvedEvent
+	(*InvolvedEventsResponse)(nil),    // 6: InvolvedEventsResponse
+	(*EventsAtTUEvent)(nil),           // 7: EventsAtTUEvent
+	(*EventsAtTUWrappedEventObj)(nil), // 8: EventsAtTUWrappedEventObj
+	(*EventsAtTUEventsResponse)(nil),  // 9: EventsAtTUEventsResponse
 }
 var file_proto_scheduler_proto_depIdxs = []int32{
-	0, // 0: SchedulerService.GetSnapshot:input_type -> GetSnapshotRequest
-	1, // 1: SchedulerService.GetSnapshot:output_type -> GetSnapshotResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	0, // 0: Event.event_source:type_name -> EventType
+	3, // 1: EventsAtTUEvent.geo:type_name -> Geolocation
+	7, // 2: EventsAtTUWrappedEventObj.event:type_name -> EventsAtTUEvent
+	9, // 3: EventsAtTUEventsResponse.events:type_name -> EventsAtTUEventsResponse
+	1, // 4: SchedulerService.GetSnapshot:input_type -> GetSnapshotRequest
+	2, // 5: SchedulerService.GetSnapshot:output_type -> GetSnapshotResponse
+	5, // [5:6] is the sub-list for method output_type
+	4, // [4:5] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_proto_scheduler_proto_init() }
@@ -167,13 +781,14 @@ func file_proto_scheduler_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_scheduler_proto_rawDesc), len(file_proto_scheduler_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   2,
+			NumEnums:      1,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_proto_scheduler_proto_goTypes,
 		DependencyIndexes: file_proto_scheduler_proto_depIdxs,
+		EnumInfos:         file_proto_scheduler_proto_enumTypes,
 		MessageInfos:      file_proto_scheduler_proto_msgTypes,
 	}.Build()
 	File_proto_scheduler_proto = out.File
