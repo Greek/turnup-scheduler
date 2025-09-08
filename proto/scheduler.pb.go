@@ -492,16 +492,17 @@ func (*InvolvedEventsResponse) Descriptor() ([]byte, []int) {
 }
 
 type EventsAtTUEvent struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
-	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	UrlName       string                 `protobuf:"bytes,4,opt,name=urlName,proto3" json:"urlName,omitempty"`
-	PhotoUrl      string                 `protobuf:"bytes,5,opt,name=photoUrl,proto3" json:"photoUrl,omitempty"`
-	Geo           *Geolocation           `protobuf:"bytes,6,opt,name=geo,proto3" json:"geo,omitempty"`
-	LocationName  string                 `protobuf:"bytes,7,opt,name=locationName,proto3" json:"locationName,omitempty"` // repeated EventInstances eventInstances = 8;
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Title          string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Description    string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	UrlName        string                 `protobuf:"bytes,4,opt,name=urlName,proto3" json:"urlName,omitempty"`
+	PhotoUrl       string                 `protobuf:"bytes,5,opt,name=photoUrl,proto3" json:"photoUrl,omitempty"`
+	Geo            *Geolocation           `protobuf:"bytes,6,opt,name=geo,proto3" json:"geo,omitempty"`
+	LocationName   string                 `protobuf:"bytes,7,opt,name=locationName,proto3" json:"locationName,omitempty"`
+	EventInstances []*EventInstances      `protobuf:"bytes,8,rep,name=eventInstances,proto3" json:"eventInstances,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *EventsAtTUEvent) Reset() {
@@ -583,6 +584,109 @@ func (x *EventsAtTUEvent) GetLocationName() string {
 	return ""
 }
 
+func (x *EventsAtTUEvent) GetEventInstances() []*EventInstances {
+	if x != nil {
+		return x.EventInstances
+	}
+	return nil
+}
+
+type EventInstances struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	EventInstance *EventInstance         `protobuf:"bytes,1,opt,name=eventInstance,proto3" json:"eventInstance,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EventInstances) Reset() {
+	*x = EventInstances{}
+	mi := &file_proto_scheduler_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EventInstances) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EventInstances) ProtoMessage() {}
+
+func (x *EventInstances) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_scheduler_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EventInstances.ProtoReflect.Descriptor instead.
+func (*EventInstances) Descriptor() ([]byte, []int) {
+	return file_proto_scheduler_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *EventInstances) GetEventInstance() *EventInstance {
+	if x != nil {
+		return x.EventInstance
+	}
+	return nil
+}
+
+type EventInstance struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Start         string                 `protobuf:"bytes,1,opt,name=start,proto3" json:"start,omitempty"`
+	End           string                 `protobuf:"bytes,2,opt,name=end,proto3" json:"end,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EventInstance) Reset() {
+	*x = EventInstance{}
+	mi := &file_proto_scheduler_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EventInstance) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EventInstance) ProtoMessage() {}
+
+func (x *EventInstance) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_scheduler_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EventInstance.ProtoReflect.Descriptor instead.
+func (*EventInstance) Descriptor() ([]byte, []int) {
+	return file_proto_scheduler_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *EventInstance) GetStart() string {
+	if x != nil {
+		return x.Start
+	}
+	return ""
+}
+
+func (x *EventInstance) GetEnd() string {
+	if x != nil {
+		return x.End
+	}
+	return ""
+}
+
 type EventsAtTUWrappedEventObj struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Event         *EventsAtTUEvent       `protobuf:"bytes,1,opt,name=event,proto3" json:"event,omitempty"`
@@ -592,7 +696,7 @@ type EventsAtTUWrappedEventObj struct {
 
 func (x *EventsAtTUWrappedEventObj) Reset() {
 	*x = EventsAtTUWrappedEventObj{}
-	mi := &file_proto_scheduler_proto_msgTypes[7]
+	mi := &file_proto_scheduler_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -604,7 +708,7 @@ func (x *EventsAtTUWrappedEventObj) String() string {
 func (*EventsAtTUWrappedEventObj) ProtoMessage() {}
 
 func (x *EventsAtTUWrappedEventObj) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_scheduler_proto_msgTypes[7]
+	mi := &file_proto_scheduler_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -617,7 +721,7 @@ func (x *EventsAtTUWrappedEventObj) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventsAtTUWrappedEventObj.ProtoReflect.Descriptor instead.
 func (*EventsAtTUWrappedEventObj) Descriptor() ([]byte, []int) {
-	return file_proto_scheduler_proto_rawDescGZIP(), []int{7}
+	return file_proto_scheduler_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *EventsAtTUWrappedEventObj) GetEvent() *EventsAtTUEvent {
@@ -636,7 +740,7 @@ type EventsAtTUEventsResponse struct {
 
 func (x *EventsAtTUEventsResponse) Reset() {
 	*x = EventsAtTUEventsResponse{}
-	mi := &file_proto_scheduler_proto_msgTypes[8]
+	mi := &file_proto_scheduler_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -648,7 +752,7 @@ func (x *EventsAtTUEventsResponse) String() string {
 func (*EventsAtTUEventsResponse) ProtoMessage() {}
 
 func (x *EventsAtTUEventsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_scheduler_proto_msgTypes[8]
+	mi := &file_proto_scheduler_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -661,7 +765,7 @@ func (x *EventsAtTUEventsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventsAtTUEventsResponse.ProtoReflect.Descriptor instead.
 func (*EventsAtTUEventsResponse) Descriptor() ([]byte, []int) {
-	return file_proto_scheduler_proto_rawDescGZIP(), []int{8}
+	return file_proto_scheduler_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *EventsAtTUEventsResponse) GetEvents() *EventsAtTUEventsResponse {
@@ -712,7 +816,7 @@ const file_proto_scheduler_proto_rawDesc = "" +
 	"\tlongitude\x18\n" +
 	" \x01(\tR\tlongitude\x12\x16\n" +
 	"\x06endsOn\x18\v \x01(\tR\x06endsOn\"\x18\n" +
-	"\x16InvolvedEventsResponse\"\xd3\x01\n" +
+	"\x16InvolvedEventsResponse\"\x8c\x02\n" +
 	"\x0fEventsAtTUEvent\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12 \n" +
@@ -720,7 +824,13 @@ const file_proto_scheduler_proto_rawDesc = "" +
 	"\aurlName\x18\x04 \x01(\tR\aurlName\x12\x1a\n" +
 	"\bphotoUrl\x18\x05 \x01(\tR\bphotoUrl\x12\x1e\n" +
 	"\x03geo\x18\x06 \x01(\v2\f.GeolocationR\x03geo\x12\"\n" +
-	"\flocationName\x18\a \x01(\tR\flocationName\"C\n" +
+	"\flocationName\x18\a \x01(\tR\flocationName\x127\n" +
+	"\x0eeventInstances\x18\b \x03(\v2\x0f.EventInstancesR\x0eeventInstances\"F\n" +
+	"\x0eEventInstances\x124\n" +
+	"\reventInstance\x18\x01 \x01(\v2\x0e.EventInstanceR\reventInstance\"7\n" +
+	"\rEventInstance\x12\x14\n" +
+	"\x05start\x18\x01 \x01(\tR\x05start\x12\x10\n" +
+	"\x03end\x18\x02 \x01(\tR\x03end\"C\n" +
 	"\x19EventsAtTUWrappedEventObj\x12&\n" +
 	"\x05event\x18\x01 \x01(\v2\x10.EventsAtTUEventR\x05event\"M\n" +
 	"\x18EventsAtTUEventsResponse\x121\n" +
@@ -744,7 +854,7 @@ func file_proto_scheduler_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_scheduler_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_proto_scheduler_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_proto_scheduler_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_proto_scheduler_proto_goTypes = []any{
 	(EventType)(0),                    // 0: EventType
 	(*GetSnapshotRequest)(nil),        // 1: GetSnapshotRequest
@@ -754,21 +864,25 @@ var file_proto_scheduler_proto_goTypes = []any{
 	(*InvolvedEvent)(nil),             // 5: InvolvedEvent
 	(*InvolvedEventsResponse)(nil),    // 6: InvolvedEventsResponse
 	(*EventsAtTUEvent)(nil),           // 7: EventsAtTUEvent
-	(*EventsAtTUWrappedEventObj)(nil), // 8: EventsAtTUWrappedEventObj
-	(*EventsAtTUEventsResponse)(nil),  // 9: EventsAtTUEventsResponse
+	(*EventInstances)(nil),            // 8: EventInstances
+	(*EventInstance)(nil),             // 9: EventInstance
+	(*EventsAtTUWrappedEventObj)(nil), // 10: EventsAtTUWrappedEventObj
+	(*EventsAtTUEventsResponse)(nil),  // 11: EventsAtTUEventsResponse
 }
 var file_proto_scheduler_proto_depIdxs = []int32{
-	0, // 0: Event.event_source:type_name -> EventType
-	3, // 1: EventsAtTUEvent.geo:type_name -> Geolocation
-	7, // 2: EventsAtTUWrappedEventObj.event:type_name -> EventsAtTUEvent
-	9, // 3: EventsAtTUEventsResponse.events:type_name -> EventsAtTUEventsResponse
-	1, // 4: SchedulerService.GetSnapshot:input_type -> GetSnapshotRequest
-	2, // 5: SchedulerService.GetSnapshot:output_type -> GetSnapshotResponse
-	5, // [5:6] is the sub-list for method output_type
-	4, // [4:5] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	0,  // 0: Event.event_source:type_name -> EventType
+	3,  // 1: EventsAtTUEvent.geo:type_name -> Geolocation
+	8,  // 2: EventsAtTUEvent.eventInstances:type_name -> EventInstances
+	9,  // 3: EventInstances.eventInstance:type_name -> EventInstance
+	7,  // 4: EventsAtTUWrappedEventObj.event:type_name -> EventsAtTUEvent
+	11, // 5: EventsAtTUEventsResponse.events:type_name -> EventsAtTUEventsResponse
+	1,  // 6: SchedulerService.GetSnapshot:input_type -> GetSnapshotRequest
+	2,  // 7: SchedulerService.GetSnapshot:output_type -> GetSnapshotResponse
+	7,  // [7:8] is the sub-list for method output_type
+	6,  // [6:7] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_proto_scheduler_proto_init() }
@@ -782,7 +896,7 @@ func file_proto_scheduler_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_scheduler_proto_rawDesc), len(file_proto_scheduler_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   9,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
