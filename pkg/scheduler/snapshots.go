@@ -60,7 +60,7 @@ func (s *Scheduler) CreateSnapshot(date string, namespace string, opts CreateSna
 	var involvedEventsResult involved.InvolvedResponseWithEvents
 	var lastErr error
 	for i := range 3 {
-		involvedEventsResult, lastErr = involved.GetAllEvents(involved.GetAllEventsOpts{Take: 50})
+		involvedEventsResult, lastErr = involved.GetAllEvents(involved.GetAllEventsOpts{Take: 200})
 		if lastErr == nil {
 			break
 		}
@@ -77,7 +77,7 @@ func (s *Scheduler) CreateSnapshot(date string, namespace string, opts CreateSna
 	var eventsAtTUEventsResult eventsattu.EventsAtTUResponseWithEvents
 	lastErr = nil
 	for i := range 3 {
-		eventsAtTUEventsResult, lastErr = eventsattu.GetAllEvents(eventsattu.GetAllEventsOpts{Take: 50})
+		eventsAtTUEventsResult, lastErr = eventsattu.GetAllEvents(eventsattu.GetAllEventsOpts{Take: 200})
 		if lastErr == nil {
 			break
 		}
