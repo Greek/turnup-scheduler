@@ -77,7 +77,7 @@ func (s *Scheduler) CreateSnapshot(date string, namespace string, opts CreateSna
 	var eventsAtTUEventsResult eventsattu.EventsAtTUResponseWithEvents
 	lastErr = nil
 	for i := range 3 {
-		eventsAtTUEventsResult, lastErr = eventsattu.GetAllEvents(eventsattu.GetAllEventsOpts{Take: 200})
+		eventsAtTUEventsResult, lastErr = eventsattu.GetAllEvents(eventsattu.GetAllEventsOpts{Take: 200, PerPage: 100})
 		if lastErr == nil {
 			break
 		}

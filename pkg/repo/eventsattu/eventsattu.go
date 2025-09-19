@@ -42,11 +42,14 @@ type EventsAtTUResponseWithEvents struct {
 	Events []EventObj `json:"events"`
 }
 
-type GetAllEventsOpts struct{ Take int }
+type GetAllEventsOpts struct {
+	Take    int
+	PerPage int
+}
 
 func GetAllEvents(opts GetAllEventsOpts) (EventsAtTUResponseWithEvents, error) {
 	var data EventsAtTUResponseWithEvents
-	rawData, err := http.GetHTTPData(constants.EVENTS_URL + "events/?days=" + fmt.Sprint(opts.Take))
+	rawData, err := http.GetHTTPData(constants.EVENTS_URL + "events/?days=" + fmt.Sprint(opts.Take) + "&pp=" + fmt.Sprint(opts.PerPage))
 	if err != nil {
 		return EventsAtTUResponseWithEvents{}, err
 	}
