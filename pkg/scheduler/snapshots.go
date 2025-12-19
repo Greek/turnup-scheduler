@@ -69,7 +69,9 @@ func (s *Scheduler) CreateSnapshot(date string, namespace string, opts CreateSna
 	}
 	if lastErr != nil {
 		log.Info("Failed to get events", slog.Any("err", lastErr))
-		return "", lastErr
+		//TODO: Refactor this logic to try forever. Exiting is ok for now so long as our platform knows to restart on exit.
+		os.Exit(1)
+		// return "", lastErr
 	}
 	mappedInvolvedEvents := mappers.MapInvolvedEventsToStdEvent(involvedEventsResult.Value)
 
@@ -86,7 +88,9 @@ func (s *Scheduler) CreateSnapshot(date string, namespace string, opts CreateSna
 	}
 	if lastErr != nil {
 		log.Info("Failed to get events", slog.Any("err", lastErr))
-		return "", lastErr
+		//TODO: Refactor this logic to try forever. Exiting is ok for now so long as our platform knows to restart on exit.
+		os.Exit(1)
+		// return "", lastErr
 	}
 	mappedEventsAtTUEvents := mappers.MapEventAtTUEventsToStdEvent(eventsAtTUEventsResult)
 
