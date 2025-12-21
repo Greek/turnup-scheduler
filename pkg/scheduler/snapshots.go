@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"os"
 	"time"
 	"turnup-scheduler/internal/constants"
 	"turnup-scheduler/internal/logging"
