@@ -55,8 +55,8 @@ func (s *Scheduler) CreateSnapshot(date string, namespace string, opts CreateSna
 
 	allEvents := []events.StandardEvent{}
 
-	log.Info("Getting events...")
-	log.Info("getting involved events")
+	log.Debug("Getting events...")
+	log.Debug("getting involved events")
 
 	var involvedEventsResult involved.InvolvedResponseWithEvents
 	var lastErr error
@@ -65,18 +65,18 @@ func (s *Scheduler) CreateSnapshot(date string, namespace string, opts CreateSna
 		if lastErr == nil {
 			break
 		}
-		log.Info("Retrying involved.GetAllEvents", slog.Int("attempt", i+1), slog.Any("err", lastErr))
+		log.Warn("Retrying involved.GetAllEvents", slog.Int("attempt", i+1), slog.Any("err", lastErr))
 		time.Sleep(RETRY_INTERVAL)
 	}
 	if lastErr != nil {
-		log.Info("Failed to get events", slog.Any("err", lastErr))
+		log.Error("Failed to get events", slog.Any("err", lastErr))
 		//TODO: Refactor this logic to try forever. Exiting is ok for now so long as our platform knows to restart on exit.
 		os.Exit(1)
 		// return "", lastErr
 	}
 	mappedInvolvedEvents := mappers.MapInvolvedEventsToStdEvent(involvedEventsResult.Value)
 
-	log.Info("getting events@tu events")
+	log.Debug("getting events@tu events")
 	var eventsAtTUEventsResult eventsattu.EventsAtTUResponseWithEvents
 	lastErr = nil
 	for i := range 3 {
@@ -84,11 +84,11 @@ func (s *Scheduler) CreateSnapshot(date string, namespace string, opts CreateSna
 		if lastErr == nil {
 			break
 		}
-		log.Info("Retrying eventsattu.GetAllEvents", slog.Int("attempt", i+1), slog.Any("err", lastErr))
+		log.Warn("Retrying eventsattu.GetAllEvents", slog.Int("attempt", i+1), slog.Any("err", lastErr))
 		time.Sleep(RETRY_INTERVAL)
 	}
 	if lastErr != nil {
-		log.Info("Failed to get events", slog.Any("err", lastErr))
+		log.Error("Failed to get events", slog.Any("err", lastErr))
 		//TODO: Refactor this logic to try forever. Exiting is ok for now so long as our platform knows to restart on exit.
 		os.Exit(1)
 		// return "", lastErr
