@@ -4,6 +4,9 @@ import (
 	"context"
 	"flag"
 	"log/slog"
+	"os"
+	"os/signal"
+	"syscall"
 	"turnup-scheduler/internal/env"
 	"turnup-scheduler/internal/lib/redis"
 	"turnup-scheduler/internal/logging"
@@ -11,7 +14,6 @@ import (
 	"turnup-scheduler/pkg/server"
 )
 
-var ctx = context.Background()
 var (
 	port = flag.Int("port", 50051, "The server port")
 )
@@ -19,6 +21,9 @@ var (
 // Init starts the application by creating Redis connections
 // and configurations.
 func Init() {
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer stop()
+
 	log := logging.BuildLogger("Init")
 	flag.Parse()
 
@@ -35,6 +40,8 @@ func Init() {
 	}
 
 	sch.CreatePubsubListener(ctx, redisClient)
-	server.InitializeGrpcServer(*port, sch)
-	select {}
+	if err := server.Run(ctx, *port, sch); err != nil {
+		log.Error("Server stopped with error", slog.Any("err", err))
+		os.Exit(1)
+	}
 }

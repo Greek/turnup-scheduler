@@ -3,7 +3,6 @@ package server
 import (
 	"context"
 	"fmt"
-	realLog "log"
 	"log/slog"
 	"net"
 	"os"
@@ -52,13 +51,13 @@ func authUnaryInterceptor(
 	return handler(ctx, req)
 }
 
-func InitializeGrpcServer(port int, scheduler *scheduler.Scheduler) {
-	log := logging.BuildLogger("InitializeGrpcServer")
+func Run(ctx context.Context, port int, scheduler *scheduler.Scheduler) error {
+	log := logging.BuildLogger("RunGrpcServer")
 
 	log.Info("Creating gRPC server")
 	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", port))
 	if err != nil {
-		realLog.Fatalf("failed to listen: %v", err)
+		return fmt.Errorf("failed to listen: %w", err)
 	}
 	grpcServer := grpc.NewServer(
 		grpc.UnaryInterceptor(authUnaryInterceptor),
@@ -66,5 +65,16 @@ func InitializeGrpcServer(port int, scheduler *scheduler.Scheduler) {
 	pb.RegisterSchedulerServiceServer(grpcServer, &Server{
 		Scheduler: scheduler,
 	})
-	grpcServer.Serve(lis)
+
+	go func() {
+		<-ctx.Done()
+		log.Info("Shutting down gRPC server")
+		grpcServer.GracefulStop()
+	}()
+
+	log.Info("Starting gRPC server", slog.Int("port", port))
+	if err := grpcServer.Serve(lis); err != nil {
+		return fmt.Errorf("gRPC server failed: %w", err)
+	}
+	return nil
 }
